@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.3'
 	id 'io.spring.dependency-management' version '1.1.3'
+	id "com.diffplug.spotless" version "6.21.0"
+
 }
 
 group = 'com.example'
@@ -13,13 +15,35 @@ java {
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+
+	compileOnly 'org.projectlombok:lombok:1.18.28'
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.28'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+spotless {
+	java {
+		removeUnusedImports()
+		formatAnnotations()
+		trimTrailingWhitespace()
+		endWithNewline()
+		googleJavaFormat('1.17.0').aosp().reflowLongStrings().reorderImports(true).groupArtifact('com.google.googlejavaformat:google-java-format')
+	}
 }

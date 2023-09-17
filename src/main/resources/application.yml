@@ -1,0 +1,10 @@
+api:
+    host: https://www.alphavantage.co/
+
+    endpoints:
+        - name: global-market
+          path: query?function=MARKET_STATUS&apikey=%s
+        - name: search
+          path: query?function=SYMBOL_SEARCH&keywords=%s&apikey=%s
+
+
