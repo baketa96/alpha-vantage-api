@@ -1,5 +1,6 @@
 package com.example.alphavantageapi.aggregation;
 
+import com.example.alphavantageapi.aggregation.models.LatestInfoModelWrapper;
 import com.example.alphavantageapi.aggregation.models.MarketStatusListModel;
 import com.example.alphavantageapi.aggregation.models.SearchListModel;
 import com.example.alphavantageapi.configuration.AlphaVantageAPIConfig;
@@ -29,8 +30,8 @@ public class AlphaVantageFetcherService {
         try {
             return restTemplate.getForObject(apiUrl, MarketStatusListModel.class);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            throw new AlphaVantageException(
+                    "Error while fetching global market data ", e.getCause());
         }
     }
 
@@ -41,8 +42,22 @@ public class AlphaVantageFetcherService {
         try {
             return restTemplate.getForObject(apiUrl, SearchListModel.class);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            throw new AlphaVantageException(
+                    "Error while searching entity " + keyword, e.getCause());
+        }
+    }
+
+    public LatestInfoModelWrapper getLatestInfo(String keyword) {
+        String apiUrl =
+                String.format(
+                        alphaVantageAPIConfig.getEndpointByName("global-quote").get(),
+                        keyword,
+                        apiKey);
+        try {
+            return restTemplate.getForObject(apiUrl, LatestInfoModelWrapper.class);
+        } catch (Exception e) {
+            throw new AlphaVantageException(
+                    "Error while searching entity " + keyword, e.getCause());
         }
     }
 }

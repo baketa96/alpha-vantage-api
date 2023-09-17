@@ -29,4 +29,9 @@ public class AlphaVantageFetcherServiceTest {
             System.out.println(entityModel);
         }
     }
+
+    @Test
+    void shouldGetLatestInfo() {
+        System.out.println(service.getLatestInfo("1JJA.FRK").getData());
+    }
 }
