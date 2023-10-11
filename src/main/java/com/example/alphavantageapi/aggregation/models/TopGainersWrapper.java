@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -23,5 +22,4 @@ public class TopGainersWrapper {
 
     @JsonProperty("top_gainers")
     private List<TopGainersModel> topGainers;
-
 }

@@ -36,12 +36,12 @@ public class AlphaVantageFetcherServiceTest {
     }
 
     @Test
-    void shouldGetTopGainers(){
+    void shouldGetTopGainers() {
         System.out.println(service.getTopGainersLosersTraded());
     }
 
     @Test
-    void shouldGetSMA(){
+    void shouldGetSMA() {
         service.getSMADataForKeyword("IBM");
     }
 }
