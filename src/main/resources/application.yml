@@ -8,4 +8,8 @@ api:
           path: query?function=SYMBOL_SEARCH&keywords=%s&apikey=%s
         - name: global-quote
           path: query?function=GLOBAL_QUOTE&symbol=%s&apikey=%s
+        - name: top-gainers
+          path: query?function=TOP_GAINERS_LOSERS&apikey=%s
+        - name: sma-analysis
+          path: query?function=SMA&symbol=%s&interval=weekly&time_period=10&series_type=open&apikey=%s
 

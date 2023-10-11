@@ -34,4 +34,14 @@ public class AlphaVantageFetcherServiceTest {
     void shouldGetLatestInfo() {
         System.out.println(service.getLatestInfo("1JJA.FRK").getData());
     }
+
+    @Test
+    void shouldGetTopGainers(){
+        System.out.println(service.getTopGainersLosersTraded());
+    }
+
+    @Test
+    void shouldGetSMA(){
+        service.getSMADataForKeyword("IBM");
+    }
 }

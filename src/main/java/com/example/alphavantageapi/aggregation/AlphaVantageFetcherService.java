@@ -1,10 +1,9 @@
 package com.example.alphavantageapi.aggregation;
 
-import com.example.alphavantageapi.aggregation.models.LatestInfoModelWrapper;
-import com.example.alphavantageapi.aggregation.models.MarketStatusListModel;
-import com.example.alphavantageapi.aggregation.models.SearchListModel;
+import com.example.alphavantageapi.aggregation.models.*;
 import com.example.alphavantageapi.configuration.AlphaVantageAPIConfig;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -58,6 +57,36 @@ public class AlphaVantageFetcherService {
         } catch (Exception e) {
             throw new AlphaVantageException(
                     "Error while searching entity " + keyword, e.getCause());
+        }
+    }
+
+    public TopGainersWrapper getTopGainersLosersTraded() {
+        String apiUrl =
+                String.format(alphaVantageAPIConfig.getEndpointByName("top-gainers").get(), apiKey);
+
+        try {
+            return restTemplate.getForObject(apiUrl, TopGainersWrapper.class);
+        } catch (Exception e) {
+            throw new AlphaVantageException("Error while fetching top gainers " + e.getMessage(), e.getCause());
+        }
+    }
+
+    public void getSMADataForKeyword(String keyword){
+
+        String apiUrl = String.format(alphaVantageAPIConfig.getEndpointByName("sma-analysis").get(), keyword, apiKey);
+        try {
+            String json = restTemplate.getForObject(apiUrl, String.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            SMACombinedData combinedData = objectMapper.readValue(json, SMACombinedData.class);
+
+            SMAMetaData metaData = combinedData.getMetaData();
+            System.out.println(metaData);
+
+            //SMAData smaData = combinedData.getTechnicalAnalysis().getTechnicalAnalysisMap().get();
+
+            System.out.println(combinedData.getTechnicalAnalysis().getTechnicalAnalysisMap().get("2020-08-07"));
+        }catch (Exception e){
+            throw new AlphaVantageException("Error while fetching SMA Data for " + keyword + e.getMessage(), e.getCause());
         }
     }
 }
