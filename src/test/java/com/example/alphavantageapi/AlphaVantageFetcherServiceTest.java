@@ -42,6 +42,13 @@ public class AlphaVantageFetcherServiceTest {
 
     @Test
     void shouldGetSMA() {
+        System.out.println("Getting SMA");
         service.getSMADataForKeyword("IBM");
+    }
+
+    @Test
+    void shouldGetEMA(){
+        System.out.println("Getting EMA");
+        service.getEMADataForKeyword("IBM");
     }
 }

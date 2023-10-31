@@ -7,7 +7,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @ToString
-public class SMAMetaData {
+public class TechIndicatorMetaData {
 
     @JsonProperty("1: Symbol")
     private String symbol;

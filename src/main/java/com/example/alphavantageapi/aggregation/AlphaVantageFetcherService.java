@@ -84,11 +84,8 @@ public class AlphaVantageFetcherService {
             ObjectMapper objectMapper = new ObjectMapper();
             SMACombinedData combinedData = objectMapper.readValue(json, SMACombinedData.class);
 
-            SMAMetaData metaData = combinedData.getMetaData();
+            TechIndicatorMetaData metaData = combinedData.getMetaData();
             System.out.println(metaData);
-
-            // SMAData smaData =
-            // combinedData.getTechnicalAnalysis().getTechnicalAnalysisMap().get();
 
             System.out.println(
                     combinedData
@@ -100,4 +97,33 @@ public class AlphaVantageFetcherService {
                     "Error while fetching SMA Data for " + keyword + e.getMessage(), e.getCause());
         }
     }
+
+
+    public void getEMADataForKeyword(String keyword) {
+
+        String apiUrl =
+                String.format(
+                        alphaVantageAPIConfig.getEndpointByName("ema-analysis").get(),
+                        keyword,
+                        apiKey);
+        try {
+
+            String json = restTemplate.getForObject(apiUrl, String.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            EMACombinedData combinedData = objectMapper.readValue(json, EMACombinedData.class);
+
+            TechIndicatorMetaData metaData = combinedData.getMetaData();
+            System.out.println(metaData);
+
+            System.out.println(
+                    combinedData
+                            .getTechnicalAnalysis()
+                            .getTechnicalAnalysisMap()
+                            .get("2021-07-30"));
+        } catch (Exception e) {
+            throw new AlphaVantageException(
+                    "Error while fetching SMA Data for " + keyword + e.getMessage(), e.getCause());
+        }
+    }
+
 }

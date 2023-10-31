@@ -12,4 +12,6 @@ api:
           path: query?function=TOP_GAINERS_LOSERS&apikey=%s
         - name: sma-analysis
           path: query?function=SMA&symbol=%s&interval=weekly&time_period=10&series_type=open&apikey=%s
+        - name: ema-analysis
+          path: query?function=EMA&symbol=%s&interval=weekly&time_period=10&series_type=open&apikey=%s
 
