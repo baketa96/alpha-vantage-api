@@ -1,3 +1,7 @@
+bot:
+  username: alpha_vantage_bot
+  token: test
+
 api:
     host: https://www.alphavantage.co/
 

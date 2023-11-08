@@ -98,7 +98,6 @@ public class AlphaVantageFetcherService {
         }
     }
 
-
     public void getEMADataForKeyword(String keyword) {
 
         String apiUrl =
@@ -125,5 +124,4 @@ public class AlphaVantageFetcherService {
                     "Error while fetching SMA Data for " + keyword + e.getMessage(), e.getCause());
         }
     }
-
 }
