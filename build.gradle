@@ -13,6 +13,11 @@ java {
 	sourceCompatibility = '17'
 }
 
+apply plugin: 'java'
+
+apply plugin: 'org.springframework.boot'
+
+
 repositories {
 	mavenCentral()
 	maven {
@@ -33,6 +38,10 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 	implementation 'org.telegram:telegrambots:6.0.1'
 
+}
+
+bootJar {
+	mainClass = 'com.example.alphavantageapi.AlphaVantageApiApplication'
 }
 
 tasks.named('test') {
