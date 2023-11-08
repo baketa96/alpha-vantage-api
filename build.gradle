@@ -44,6 +44,11 @@ bootJar {
 	mainClass = 'com.example.alphavantageapi.AlphaVantageApiApplication'
 }
 
+
+jar {
+	enabled = false
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
