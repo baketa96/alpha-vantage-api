@@ -31,6 +31,7 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
+        System.out.println("Stigao je neki update");
 
         copyMessage(message.getFrom().getId(), message.getMessageId());
     }
