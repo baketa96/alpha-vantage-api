@@ -3,6 +3,7 @@ bot:
   token:  ${TELEGRAM_BOT_TOKEN}
 
 api:
+    key: ${ALPHA_VANGTAGE_KEY}
     host: https://www.alphavantage.co/
 
     endpoints:

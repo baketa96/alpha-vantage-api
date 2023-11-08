@@ -5,6 +5,7 @@ import com.example.alphavantageapi.configuration.AlphaVantageAPIConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +15,8 @@ public class AlphaVantageFetcherService {
     private final AlphaVantageAPIConfig alphaVantageAPIConfig;
     private final RestTemplate restTemplate;
 
-    private final String apiKey = "N/A";
+    @Value("${api.key}")
+    private String apiKey;
 
     @Autowired
     public AlphaVantageFetcherService(AlphaVantageAPIConfig alphaVantageAPIConfig) {
