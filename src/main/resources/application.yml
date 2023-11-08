@@ -1,6 +1,6 @@
 bot:
-  username: alpha_vantage_bot
-  token: test
+  username: ${TELEGRAM_BOT_USERNAME}
+  token:  ${TELEGRAM_BOT_TOKEN}
 
 api:
     host: https://www.alphavantage.co/
