@@ -1,8 +1,8 @@
 package com.example.alphavantageapi;
 
 import com.example.alphavantageapi.configuration.AlphaVantageAPIConfig;
-
 import com.example.alphavantageapi.telegrambot.AlphaVantageBot;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,7 +16,8 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class AlphaVantageApiApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = SpringApplication.run(AlphaVantageApiApplication.class, args);
+        ConfigurableApplicationContext ctx =
+                SpringApplication.run(AlphaVantageApiApplication.class, args);
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(ctx.getBean("alphaVantageBot", AlphaVantageBot.class));
