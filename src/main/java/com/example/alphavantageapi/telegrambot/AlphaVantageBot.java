@@ -1,5 +1,6 @@
 package com.example.alphavantageapi.telegrambot;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -18,7 +19,7 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String token;
 
-    private boolean screaming;
+    @Autowired private AlphaVantageBotService alphaVantageBotService;
 
     @Override
     public String getBotUsername() {
@@ -33,44 +34,26 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
+            SendMessage response;
             Message message = update.getMessage();
             long chatId = message.getChatId();
 
-            switch (message.getText()) {
-                case "/start" -> handleStartCommand(chatId);
-                case "/help" -> handleHelpCommand(chatId);
-                default -> handleUnknownCommand(chatId);
+            String messageText = message.getText();
+
+            if (messageText.equals(BotCommandsEnum.START.getCommand())) {
+                response = alphaVantageBotService.handleStartCommand(chatId);
+            } else if (messageText.equals(BotCommandsEnum.HELP.getCommand())) {
+                response = alphaVantageBotService.handleHelpCommand(chatId);
+            } else if (messageText.equals(BotCommandsEnum.MOST_ACTIVE.getCommand())) {
+                response = alphaVantageBotService.handleMostActive(chatId);
+            } else if (messageText.contains(BotCommandsEnum.SEARCH.getCommand())) {
+                response = alphaVantageBotService.handleSearchCommand(chatId, messageText);
+            } else {
+                response = alphaVantageBotService.handleUnknownCommand(chatId);
             }
+
+            sendText(response);
         }
-    }
-
-    private void handleStartCommand(long chatId) {
-        String response = "Welcome to Alpha Vantage API Bot! New stuff is coming soon!";
-        sendText(chatId, response);
-    }
-
-    private void handleHelpCommand(long chatId) {
-        String response =
-                "This bot will help you get financial data from Alpha Vantage API. \n "
-                        + "It is still in development, new stuff will come soon";
-        sendText(chatId, response);
-    }
-
-    private void handleUnknownCommand(long chatId) {
-        String response =
-                "Unknown command, use \\help command to check what this bot can do for you";
-        sendText(chatId, response);
-    }
-
-    private void checkCommands(Message message) {
-        if (message.getText().equals("/scream")) screaming = true;
-        else if (message.getText().equals("/whisper")) screaming = false;
-        return;
-    }
-
-    private void scream(Long id, Message message) {
-        if (message.hasText()) sendText(id, message.getText().toUpperCase());
-        else copyMessage(message.getFrom().getId(), message.getMessageId());
     }
 
     public void copyMessage(Long userId, Integer msgId) {
@@ -88,8 +71,7 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
         }
     }
 
-    public void sendText(Long id, String text) {
-        SendMessage sm = SendMessage.builder().chatId(id.toString()).text(text).build();
+    public void sendText(SendMessage sm) {
         try {
             execute(sm);
         } catch (TelegramApiException e) {
