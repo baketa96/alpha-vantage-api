@@ -32,10 +32,34 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
-        if (message.isCommand()) checkCommands(message);
-        if (screaming) scream(message.getFrom().getId(), message);
-        copyMessage(message.getFrom().getId(), message.getMessageId());
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            Message message = update.getMessage();
+            long chatId = message.getChatId();
+
+            switch (message.getText()) {
+                case "/start" -> handleStartCommand(chatId);
+                case "/help" -> handleHelpCommand(chatId);
+                default -> handleUnknownCommand(chatId);
+            }
+        }
+    }
+
+    private void handleStartCommand(long chatId) {
+        String response = "Welcome to Alpha Vantage API Bot! New stuff is coming soon!";
+        sendText(chatId, response);
+    }
+
+    private void handleHelpCommand(long chatId) {
+        String response =
+                "This bot will help you get financial data from Alpha Vantage API. \n "
+                        + "It is still in development, new stuff will come soon";
+        sendText(chatId, response);
+    }
+
+    private void handleUnknownCommand(long chatId) {
+        String response =
+                "Unknown command, use \\help command to check what this bot can do for you";
+        sendText(chatId, response);
     }
 
     private void checkCommands(Message message) {
@@ -66,7 +90,6 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
 
     public void sendText(Long id, String text) {
         SendMessage sm = SendMessage.builder().chatId(id.toString()).text(text).build();
-
         try {
             execute(sm);
         } catch (TelegramApiException e) {
