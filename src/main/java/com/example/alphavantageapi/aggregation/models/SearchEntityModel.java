@@ -40,34 +40,28 @@ public class SearchEntityModel {
 
     @Override
     public String toString() {
-        return "YourClass{"
-                + "symbol='"
+        return "Symbol: "
                 + symbol
-                + '\''
-                + ", name='"
+                + "\n"
+                + "Name: "
                 + name
-                + '\''
-                + ", type='"
+                + "\n"
+                + "Type: "
                 + type
-                + '\''
-                + ", region='"
+                + "\n"
+                + "Region: "
                 + region
-                + '\''
-                + ", marketOpen='"
+                + "\n"
+                + "Market Open: "
                 + marketOpen
-                + '\''
-                + ", marketClose='"
+                + "\n"
+                + "Market Close: "
                 + marketClose
-                + '\''
-                + ", timezone='"
+                + "\n"
+                + "Timezone: "
                 + timezone
-                + '\''
-                + ", currency='"
-                + currency
-                + '\''
-                + ", matchScore='"
-                + matchScore
-                + '\''
-                + '}';
+                + "\n"
+                + "Currency: "
+                + currency;
     }
 }

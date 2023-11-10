@@ -5,14 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class TopGainersModel {
 
     private String ticker;
@@ -25,4 +23,22 @@ public class TopGainersModel {
     private String changePercentage;
 
     private Long volume;
+
+    @Override
+    public String toString() {
+        return "Ticker: "
+                + ticker
+                + "\n"
+                + "Price: "
+                + price
+                + "\n"
+                + "Change Amount: "
+                + changeAmount
+                + "\n"
+                + "Change Percentage: "
+                + changePercentage
+                + "\n"
+                + "Volume: "
+                + volume;
+    }
 }

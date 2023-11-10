@@ -48,6 +48,7 @@ public class AlphaVantageBotService {
 
         for (T t : listData) {
             stringBuilder.append(t.toString());
+            stringBuilder.append("\n ----------- \n");
         }
         return stringBuilder.toString();
     }
@@ -61,10 +62,12 @@ public class AlphaVantageBotService {
                         new SendMessage(String.valueOf(chatId), "Please provide a search keyword.");
             } else {
                 String keyword = parts[1];
-                // Handle the search with the provided keyword
                 SearchListModel searchListModel = alphaVantageFetcherService.searchEntity(keyword);
                 String message = generateMessage(searchListModel.getBestMatches());
-                sendMessage = new SendMessage(String.valueOf(chatId), message);
+                sendMessage =
+                        new SendMessage(
+                                String.valueOf(chatId),
+                                message.isEmpty() ? "Nothing was found, try again" : message);
             }
         } else {
             sendMessage = handleUnknownCommand(chatId);
