@@ -18,6 +18,8 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String token;
 
+    private boolean screaming;
+
     @Override
     public String getBotUsername() {
         return username;
@@ -31,9 +33,20 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
-        System.out.println("Stigao je neki update");
-
+        if (message.isCommand()) checkCommands(message);
+        if (screaming) scream(message.getFrom().getId(), message);
         copyMessage(message.getFrom().getId(), message.getMessageId());
+    }
+
+    private void checkCommands(Message message) {
+        if (message.getText().equals("/scream")) screaming = true;
+        else if (message.getText().equals("/whisper")) screaming = false;
+        return;
+    }
+
+    private void scream(Long id, Message message) {
+        if (message.hasText()) sendText(id, message.getText().toUpperCase());
+        else copyMessage(message.getFrom().getId(), message.getMessageId());
     }
 
     public void copyMessage(Long userId, Integer msgId) {
