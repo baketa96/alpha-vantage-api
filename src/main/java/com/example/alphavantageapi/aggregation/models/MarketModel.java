@@ -32,28 +32,20 @@ public class MarketModel {
 
     @Override
     public String toString() {
-        return "YourClass{"
-                + "marketType='"
+        return "Market Details:"
+                + "\nMarket Type: "
                 + marketType
-                + '\''
-                + ", region='"
+                + "\nRegion: "
                 + region
-                + '\''
-                + ", primaryExchanges='"
+                + "\nPrimary Exchanges: "
                 + primaryExchanges
-                + '\''
-                + ", localOpen='"
+                + "\nLocal Open Time: "
                 + localOpen
-                + '\''
-                + ", localClose='"
+                + "\nLocal Close Time: "
                 + localClose
-                + '\''
-                + ", currentStatus='"
+                + "\nCurrent Status: "
                 + currentStatus
-                + '\''
-                + ", notes='"
-                + notes
-                + '\''
-                + '}';
+                + "\nAdditional Notes: "
+                + notes;
     }
 }

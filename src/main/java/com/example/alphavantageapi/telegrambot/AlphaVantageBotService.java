@@ -99,4 +99,10 @@ public class AlphaVantageBotService {
         }
         return null;
     }
+
+    public SendMessage handleMarketsStatusCommand(long chatId) {
+        MarketStatusListModel topGainersWrapper = alphaVantageFetcherService.getMarkets();
+        List<MarketModel> marketList = topGainersWrapper.getMarkets();
+        return new SendMessage(String.valueOf(chatId), generateMessage(marketList));
+    }
 }

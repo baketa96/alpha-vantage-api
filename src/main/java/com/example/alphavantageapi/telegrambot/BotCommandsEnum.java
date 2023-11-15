@@ -9,7 +9,8 @@ public enum BotCommandsEnum {
     SEARCH(
             "/searchentity",
             "Get best best-matching symbols and market information based on provided keyword."),
-    LATEST_INFO("/latestinfo", "Get latest info for entity.");
+    LATEST_INFO("/latestinfo", "Get latest info for entity."),
+    MARKETS_STATUS("/marketsstatus", "Get supported markets status.");
     ;
 
     private final String command;

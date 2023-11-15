@@ -48,9 +48,10 @@ public class AlphaVantageBot extends TelegramLongPollingBot {
                 response = alphaVantageBotService.handleMostActive(chatId);
             } else if (messageText.contains(BotCommandsEnum.SEARCH.getCommand())) {
                 response = alphaVantageBotService.handleSearchCommand(chatId, messageText);
-
             } else if (messageText.contains(BotCommandsEnum.LATEST_INFO.getCommand())) {
                 response = alphaVantageBotService.handleLatestInfoCommand(chatId, messageText);
+            } else if (messageText.contains(BotCommandsEnum.MARKETS_STATUS.getCommand())) {
+                response = alphaVantageBotService.handleMarketsStatusCommand(chatId);
             } else {
                 response = alphaVantageBotService.handleUnknownCommand(chatId);
             }
