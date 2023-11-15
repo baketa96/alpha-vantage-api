@@ -46,10 +46,8 @@ public class LatestInfoModel {
 
     @Override
     public String toString() {
-        return "StockData {"
-                + "\n\tSymbol: '"
+        return "\tSymbol: "
                 + symbol
-                + '\''
                 + ",\n\tOpen: "
                 + open
                 + ",\n\tHigh: "
@@ -69,6 +67,6 @@ public class LatestInfoModel {
                 + ",\n\tChange Percent: '"
                 + changePercent
                 + '\''
-                + "\n}";
+                + "\n";
     }
 }
