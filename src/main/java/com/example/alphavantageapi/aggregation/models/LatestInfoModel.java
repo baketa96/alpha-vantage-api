@@ -46,29 +46,29 @@ public class LatestInfoModel {
 
     @Override
     public String toString() {
-        return "StockData{"
-                + "symbol='"
+        return "StockData {"
+                + "\n\tSymbol: '"
                 + symbol
                 + '\''
-                + ", open="
+                + ",\n\tOpen: "
                 + open
-                + ", high="
+                + ",\n\tHigh: "
                 + high
-                + ", low="
+                + ",\n\tLow: "
                 + low
-                + ", price="
+                + ",\n\tPrice: "
                 + price
-                + ", volume="
+                + ",\n\tVolume: "
                 + volume
-                + ", latestTradingDate="
+                + ",\n\tLatest Trading Date: "
                 + latestTradingDate
-                + ", previousClose="
+                + ",\n\tPrevious Close: "
                 + previousClose
-                + ", change="
+                + ",\n\tChange: "
                 + change
-                + ", changePercent='"
+                + ",\n\tChange Percent: '"
                 + changePercent
                 + '\''
-                + '}';
+                + "\n}";
     }
 }

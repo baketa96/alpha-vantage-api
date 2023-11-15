@@ -1,9 +1,7 @@
 package com.example.alphavantageapi.telegrambot;
 
 import com.example.alphavantageapi.aggregation.AlphaVantageFetcherService;
-import com.example.alphavantageapi.aggregation.models.SearchListModel;
-import com.example.alphavantageapi.aggregation.models.TopGainersModel;
-import com.example.alphavantageapi.aggregation.models.TopGainersWrapper;
+import com.example.alphavantageapi.aggregation.models.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,24 +52,51 @@ public class AlphaVantageBotService {
     }
 
     public SendMessage handleSearchCommand(long chatId, String messageText) {
-        SendMessage sendMessage;
-        if (messageText.startsWith("/search")) {
-            String[] parts = messageText.split(" ", 2);
-            if (parts.length < 2) {
-                sendMessage =
-                        new SendMessage(String.valueOf(chatId), "Please provide a search keyword.");
-            } else {
-                String keyword = parts[1];
-                SearchListModel searchListModel = alphaVantageFetcherService.searchEntity(keyword);
-                String message = generateMessage(searchListModel.getBestMatches());
-                sendMessage =
-                        new SendMessage(
-                                String.valueOf(chatId),
-                                message.isEmpty() ? "Nothing was found, try again" : message);
-            }
-        } else {
-            sendMessage = handleUnknownCommand(chatId);
+        SendMessage errorMessage =
+                evaluateCommand(BotCommandsEnum.SEARCH.getCommand(), chatId, messageText);
+
+        if (errorMessage != null) return errorMessage;
+
+        String[] parts = messageText.split(" ", 2);
+
+        String keyword = parts[1];
+        SearchListModel searchListModel = alphaVantageFetcherService.searchEntity(keyword);
+        String message = generateMessage(searchListModel.getBestMatches());
+        return new SendMessage(
+                String.valueOf(chatId),
+                message.isEmpty() ? "Nothing was found, try again" : message);
+    }
+
+    public SendMessage handleLatestInfoCommand(long chatId, String messageText) {
+
+        SendMessage errorMessage =
+                evaluateCommand(BotCommandsEnum.LATEST_INFO.getCommand(), chatId, messageText);
+
+        if (errorMessage != null) return errorMessage;
+
+        String[] parts = messageText.split(" ", 2);
+
+        String keyword = parts[1];
+        LatestInfoModelWrapper latestInfoModelWrapper =
+                alphaVantageFetcherService.getLatestInfo(keyword);
+        String message =
+                latestInfoModelWrapper.getData() != null
+                        ? latestInfoModelWrapper.getData().toString()
+                        : "Nothing was found for give entity";
+        return new SendMessage(String.valueOf(chatId), message);
+    }
+
+    public SendMessage evaluateCommand(String command, Long chatId, String text) {
+        if (!text.startsWith(command)) {
+            return handleUnknownCommand(chatId);
         }
-        return sendMessage;
+
+        String[] parts = text.split(" ", 2);
+        if (parts.length < 2) {
+            return new SendMessage(
+                    String.valueOf(chatId),
+                    "Please provide a keyword. Type " + command + " followed by the keyword.");
+        }
+        return null;
     }
 }

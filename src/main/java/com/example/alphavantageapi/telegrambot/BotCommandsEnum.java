@@ -8,7 +8,9 @@ public enum BotCommandsEnum {
             "Get top 20 gainers, losers, and the most active traded tickers in the US market."),
     SEARCH(
             "/searchentity",
-            "Get best best-matching symbols and market information based on provided keyword.");
+            "Get best best-matching symbols and market information based on provided keyword."),
+    LATEST_INFO("/latestinfo", "Get latest info for entity.");
+    ;
 
     private final String command;
     private final String description;
